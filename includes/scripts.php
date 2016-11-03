@@ -20,7 +20,7 @@ function edd_manual_emails_admin_scripts( $hook ) {
     // Use minified libraries if SCRIPT_DEBUG is turned off
     $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-    if( $hook == $edd_settings_page && $_REQUEST['section'] == 'edd-manual-emails' ) {
+    if( $hook == $edd_settings_page && isset($_REQUEST['section']) && $_REQUEST['section'] == 'edd-manual-emails' ) {
         wp_enqueue_script( 'edd_manual_emails_admin_js', EDD_MANUAL_EMAILS_URL . '/assets/js/edd-manual-emails' . $suffix . '.js', array( 'jquery' ) );
     }
 }

@@ -1,22 +1,29 @@
 jQuery(document).ready(function($) {
+    $('#submit').val('Send');
+
     $('#tab_container form').on('submit',  function(e) {
         e.preventDefault();
 
         var subject = $('input[name="edd_settings[edd_manual_emails_subject]"]').val();
         var to = $('textarea[name="edd_settings[edd_manual_emails_to]"]').val().split("\n");
         var content = $('textarea[name="edd_settings[edd_manual_emails_content]"]').val();
+        var to_all_users = $('input[name="edd_settings[edd_manual_emails_to_all_users]"]').is(':checked');
+        var to_all_vendors = $('input[name="edd_settings[edd_manual_emails_to_all_vendors]"]').is(':checked');
 
         $('#edd-manual-emails-no-emails-error').remove();
         $('#edd-manual-emails-ajax-response').remove();
 
-        if($('textarea[name="edd_settings[edd_manual_emails_to]"]').val().trim() != '' && to.length > 0) {
+        if($('textarea[name="edd_settings[edd_manual_emails_to]"]').val().trim() != '' && to.length > 0 || to_all_users || to_all_vendors) {
             $.ajax({
                 url: ajax_auth_object["ajaxurl"],
+                method: 'post',
                 data: {
                     action: 'edd_manual_emails_send',
                     subject: subject,
                     to: to,
-                    content: content
+                    content: content,
+                    to_all_users: to_all_users,
+                    to_all_vendors: to_all_vendors,
                 },
                 success: function (response) {
                     var sent_emails=0;

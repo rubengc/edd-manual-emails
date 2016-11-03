@@ -3,7 +3,7 @@
  * Plugin Name:     EDD Manual Emails
  * Plugin URI:      https://wordpress.org/plugins/edd-manual-emails/
  * Description:     Send emails to anyone using your EDD email template
- * Version:         1.0.0
+ * Version:         1.0.1
  * Author:          rubengc
  * Author URI:      http://rubengc.com
  * Text Domain:     edd-manual-emails
@@ -180,7 +180,20 @@ if( !class_exists( 'EDD_Manual_Emails' ) ) {
                     'desc'  => __( 'Enter the email address(es) that should receive the email, one per line', 'edd-manual-emails' ),
                     'type'  => 'textarea',
                 ),
+                array(
+                    'id'    => 'edd_manual_emails_to_all_users',
+                    'desc'  => __( 'Send to all registered users', 'edd-manual-emails' ),
+                    'type'  => 'checkbox',
+                ),
             );
+
+            if(class_exists('EDD_Front_End_Submissions')) {
+                $edd_manual_emails_settings[] = array(
+                    'id' => 'edd_manual_emails_to_all_vendors',
+                    'desc' => __('Send to all vendors', 'edd-manual-emails'),
+                    'type' => 'checkbox',
+                );
+            }
 
             if ( version_compare( EDD_VERSION, 2.5, '>=' ) ) {
                 $edd_manual_emails_settings = array( 'edd-manual-emails' => $edd_manual_emails_settings );
